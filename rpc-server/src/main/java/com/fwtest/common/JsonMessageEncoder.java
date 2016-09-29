@@ -15,6 +15,7 @@ public class JsonMessageEncoder extends MessageToMessageEncoder<JSONObject>
 {
 	@Override
 	protected void encode(ChannelHandlerContext ctx, JSONObject msg, List<Object> out) throws Exception {
-		out.add(msg.toString()+ Constants.instance.PackageDelimiterStr);
+		out.add(msg.toString() );
+		out.add( Constants.instance.PackageDelimiterStr);
 	}
 }
