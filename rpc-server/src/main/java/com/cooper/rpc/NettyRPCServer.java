@@ -1,12 +1,12 @@
 package com.cooper.rpc;
 
 
-import org.jboss.netty.bootstrap.ServerBootstrap;
-import org.jboss.netty.channel.*;
-import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
-
-import java.net.InetSocketAddress;
-import java.util.concurrent.Executors;
+import com.cooper.rpc.handler.CooperServerBizHandler;
+import com.fwtest.Constants;
+import com.util.UtilConsole;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
  * Created by xijingbo on 2016-09-29.
@@ -14,59 +14,53 @@ import java.util.concurrent.Executors;
 public class NettyRPCServer implements  RPCServer{
 
     public static void main(String [] args){
-        NettyRPCServer nettyRPCServer = new NettyRPCServer(8000);
-        nettyRPCServer.start();
+        String host = Constants.instance.DefaultHost;
+        int port = Constants.instance.DefaultPort;
+
+        if(args.length < 2)
+        {
+            UtilConsole.error("启动需要两个参数,绑定ip和端口，默认使用 " + Constants.instance.DefaultHost + ":" + Constants.instance.DefaultPort);
+        }
+        else
+        {
+            host = args[0];
+            port = Integer.parseInt(args[1]);
+        }
+        UtilConsole.log("启动 " + host + ":" + port);
+        NettyRPCServer server = new NettyRPCServer(host,port);
+        server.start();
     }
 
     private int port;
-    public NettyRPCServer(int port) {
+    private String host;
+    public NettyRPCServer(String host,int port) {
+        this.host = host;
         this.port = port;
     }
 
     public void start(){
-        // Server服务启动器
-        ServerBootstrap bootstrap = new ServerBootstrap(
-                new NioServerSocketChannelFactory(
-                        Executors.newCachedThreadPool(),
-                        Executors.newCachedThreadPool()));
-        // 设置一个处理客户端消息和各种消息事件的类(Handler)
-        bootstrap
-                .setPipelineFactory(new ChannelPipelineFactory() {
-                    @Override
-                    public ChannelPipeline getPipeline()
-                            throws Exception {
-                        return Channels
-                                .pipeline(new HelloServerHandler());
-                    }
-                });
-        // 开放8000端口供客户端访问。
-        bootstrap.bind(new InetSocketAddress(port));
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        try {
+            io.netty.bootstrap.ServerBootstrap b = new io.netty.bootstrap.ServerBootstrap();
+            b.group(bossGroup, workerGroup)
+                    .channel(NioServerSocketChannel.class)
+//					.handler(new LoggingHandler(LogLevel.INFO))
+                    .childHandler(new CooperServerBizHandler());
+
+            b.bind(host,port).sync().channel().closeFuture().sync();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        }
     }
 
     public void destory(){
 
-    }
-
-    private static class HelloServerHandler extends
-            SimpleChannelHandler {
-
-        /**
-         * 当有客户端绑定到服务端的时候触发，打印"Hello world, I'm server."
-         *
-         * @alia OneCoder
-         * @author lihzh
-         */
-        public void channelConnected(
-                ChannelHandlerContext ctx,
-                ChannelStateEvent e) {
-            System.out.println("Hello world, I'm server.");
-        }
-
-        @Override
-        public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-            super.messageReceived(ctx, e);
-            Object o = e.getMessage();
-            System.out.println(o.toString());
-        }
     }
 }
