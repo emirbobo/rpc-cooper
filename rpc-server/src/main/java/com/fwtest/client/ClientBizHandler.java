@@ -43,7 +43,7 @@ public class ClientBizHandler extends SimpleChannelInboundHandler<JSONObject> {
 		ChannelFuture lastWriteFuture = null;
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			UtilConsole.log("可以开始聊天了，输入 bye 退出");
+			UtilConsole.log("可以开始聊天了\n输入name:新名字 改名\n输入 bye 退出");
 			while (true){
 				String line = in.readLine();
 				if (line == null) {
