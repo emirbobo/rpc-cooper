@@ -21,8 +21,12 @@ public class CooperServerDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> objects) throws Exception {
         System.out.println(byteBuf.readableBytes());
-        byte[] bs = new byte[byteBuf.readableBytes()];
-        byteBuf.readBytes(bs);
-        objects.add(ObjectSerialize.deSerialize(bs));
+        int left = byteBuf.readableBytes();
+        int len = byteBuf.readInt();
+        if(len == left){
+            byte[] bs = new byte[byteBuf.readableBytes()];
+            byteBuf.readBytes(bs);
+            objects.add(ObjectSerialize.deSerialize(bs));
+        }
     }
 }

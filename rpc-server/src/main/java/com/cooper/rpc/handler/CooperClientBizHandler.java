@@ -10,9 +10,11 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.json.JSONObject;
+import org.omg.CORBA.Request;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Administrator on 2016/9/29.
@@ -20,6 +22,8 @@ import java.io.InputStreamReader;
 public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestBody> {
 	public static CooperClientBizHandler instance;
 	private Channel channel;
+
+	private AtomicInteger id = new AtomicInteger(1);
 
 	public CooperClientBizHandler() {
 		instance = this;
@@ -31,7 +35,14 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestB
 		UtilConsole.log("connected");
         UtilConsole.log("可以开始调用远程方法了\n输入类名方法名");
 
-        run();
+        Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				ready();
+			}
+		};
+		Thread t = new Thread(r);
+		t.start();
 	}
 
     ChannelFuture lastWriteFuture = null;
@@ -42,7 +53,7 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestB
 
 	}
 
-	public void run() {
+	public void ready() {
 		// Read commands from the stdin.
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -54,7 +65,8 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestB
 				}
 
 				// Sends the received line to the server.
-				lastWriteFuture = channel.writeAndFlush(new ResponseBody(0,line+"调用成功"));
+				lastWriteFuture = channel.writeAndFlush(new RequestBody(id.getAndIncrement()+"","InvokeClass", line ,null) {
+				});
 
 				// If user typed the 'bye' command, wait until the server closes
 				// the connection.
