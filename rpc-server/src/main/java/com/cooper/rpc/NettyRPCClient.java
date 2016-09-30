@@ -52,6 +52,8 @@ public class NettyRPCClient {
 
             // Wait until the connection is closed.
             f.channel().closeFuture().sync();
+
+
         }
         catch (Exception e)
         {

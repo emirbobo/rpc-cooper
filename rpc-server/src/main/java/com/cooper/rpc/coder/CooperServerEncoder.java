@@ -22,6 +22,7 @@ public class CooperServerEncoder extends MessageToByteEncoder<RequestBody> {
     protected void encode(ChannelHandlerContext channelHandlerContext, RequestBody requestBody, ByteBuf byteBuf) throws Exception {
         byte[] bs = ObjectSerialize.serialize(requestBody);
         System.out.println("total bytes ["+bs.length+"]");
+        byteBuf.writeInt(bs.length);
         byteBuf.writeBytes(bs);
     }
 }

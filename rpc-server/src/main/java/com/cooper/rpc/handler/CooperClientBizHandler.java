@@ -62,11 +62,10 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestB
 					channel.closeFuture().sync();
 					break;
 				}// Wait until all messages are flushed before closing the channel.
-                if (lastWriteFuture != null) {
-                    lastWriteFuture.sync();
-                }
 			}
-
+            if (lastWriteFuture != null) {
+                lastWriteFuture.sync();
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
