@@ -44,9 +44,14 @@ public class NettyRPCClient {
                     .handler(new ClientChannelInit());
 
             // Start the connection attempt.
-            io.netty.channel.Channel ch = b.connect(host, port).sync().channel();
+//            io.netty.channel.Channel ch = b.connect(host, port).sync().channel();
+//
+//            CooperClientBizHandler.instance.run();
 
-            CooperClientBizHandler.instance.run();
+            ChannelFuture f = b.connect(host, port).sync(); // (5)
+
+            // Wait until the connection is closed.
+            f.channel().closeFuture().sync();
         }
         catch (Exception e)
         {

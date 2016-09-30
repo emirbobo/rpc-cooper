@@ -24,8 +24,8 @@ public class ClientChannelInit extends ChannelInitializer<SocketChannel>{
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
 //        pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Unpooled.wrappedBuffer(Constants.instance.PackageDelimiter)));
-        pipeline.addLast(new StringDecoder());
-        pipeline.addLast(new StringEncoder());
+//        pipeline.addLast(new StringDecoder());
+//        pipeline.addLast(new StringEncoder());
         pipeline.addLast(new CooperServerDecoder());
         pipeline.addLast(new CooperServerEncoder());
         pipeline.addLast(new CooperClientBizHandler());

@@ -29,20 +29,24 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestB
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		this.channel = ctx.channel();
 		UtilConsole.log("connected");
-//		run();
+        UtilConsole.log("可以开始调用远程方法了\n输入类名方法名");
+
+        run();
 	}
+
+    ChannelFuture lastWriteFuture = null;
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, RequestBody pack) throws Exception
 	{
+
 	}
 
 	public void run() {
 		// Read commands from the stdin.
-		ChannelFuture lastWriteFuture = null;
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			UtilConsole.log("可以开始调用远程方法了\n输入类名方法名");
+
 			while (true){
 				String line = in.readLine();
 				if (line == null) {
@@ -57,12 +61,12 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestB
 				if ("bye".equals(line.toLowerCase())) {
 					channel.closeFuture().sync();
 					break;
-				}
+				}// Wait until all messages are flushed before closing the channel.
+                if (lastWriteFuture != null) {
+                    lastWriteFuture.sync();
+                }
 			}
-			// Wait until all messages are flushed before closing the channel.
-			if (lastWriteFuture != null) {
-				lastWriteFuture.sync();
-			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
