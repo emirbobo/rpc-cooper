@@ -2,8 +2,6 @@ package com.cooper.rpc;
 
 
 import com.cooper.rpc.channel.ServerChannelInit;
-import cooper.rpc.Constants;
-import cooper.rpc.UtilConsole;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;

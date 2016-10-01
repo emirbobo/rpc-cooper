@@ -1,4 +1,4 @@
-package cooper.rpc.body;
+package com.cooper.rpc.body;
 
 import java.util.Arrays;
 

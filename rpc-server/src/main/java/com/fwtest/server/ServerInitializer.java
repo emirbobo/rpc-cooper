@@ -2,7 +2,7 @@ package com.fwtest.server;
 
 import com.fwtest.common.JsonMessageDecoder;
 import com.fwtest.common.JsonMessageEncoder;
-import cooper.rpc.Constants;
+import com.cooper.rpc.Constants;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

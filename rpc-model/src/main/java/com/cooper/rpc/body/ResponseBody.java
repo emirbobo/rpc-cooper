@@ -1,4 +1,4 @@
-package cooper.rpc.body;
+package com.cooper.rpc.body;
 
 /**
  * Created by emirbobo on 2016/9/30.

@@ -1,7 +1,7 @@
 package com.fwtest.client;
 
-import cooper.rpc.Constants;
-import cooper.rpc.UtilConsole;
+import com.cooper.rpc.Constants;
+import com.cooper.rpc.UtilConsole;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;

@@ -15,6 +15,7 @@
         <module>cooper-utils</module>
         <module>cooper-base-resources</module>
         <module>cooper-parent</module>
+        <module>cooper-serialize</module>
     </modules>
 
     <build>

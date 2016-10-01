@@ -1,7 +1,5 @@
 package com.cooper.rpc;
 
-import cooper.rpc.Constants;
-import cooper.rpc.UtilConsole;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
