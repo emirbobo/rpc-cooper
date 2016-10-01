@@ -1,4 +1,4 @@
-package com.cooper.rpc.coder;
+package com.cooper.rpc.code;
 
 import cooper.rpc.ObjectSerialize;
 import io.netty.buffer.ByteBuf;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by emirbobo on 2016/9/30.
  */
-public class CooperServerDecoder extends ByteToMessageDecoder {
+public class CooperClientDecoder extends ByteToMessageDecoder {
 //    @Override
 //    protected void decode(ChannelHandlerContext channelHandlerContext, byte[] responseBody, List<Object> list) throws Exception {
 //        list.add(ObjectSerialize.deSerialize(responseBody));

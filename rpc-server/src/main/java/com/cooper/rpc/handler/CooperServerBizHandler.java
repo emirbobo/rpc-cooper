@@ -1,7 +1,7 @@
 package com.cooper.rpc.handler;
 
-import com.cooper.rpc.body.RequestBody;
-import com.cooper.rpc.body.ResponseBody;
+import cooper.rpc.body.RequestBody;
+import cooper.rpc.body.ResponseBody;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

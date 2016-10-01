@@ -1,4 +1,4 @@
-package com.util;
+package cooper.rpc;
 
 import org.json.JSONException;
 import org.json.JSONObject;

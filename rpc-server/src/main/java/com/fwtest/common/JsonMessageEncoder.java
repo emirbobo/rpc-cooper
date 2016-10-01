@@ -1,8 +1,7 @@
 package com.fwtest.common;
 
-import com.fwtest.Constants;
+import cooper.rpc.Constants;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.MessageToMessageEncoder;
 import org.json.JSONObject;
 

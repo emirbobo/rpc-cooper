@@ -1,8 +1,8 @@
 package com.fwtest.client;
 
-import com.fwtest.Constants;
-import com.util.UtilConsole;
-import com.util.UtilJson;
+import cooper.rpc.Constants;
+import cooper.rpc.UtilConsole;
+import cooper.rpc.UtilJson;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;

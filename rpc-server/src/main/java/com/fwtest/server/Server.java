@@ -1,13 +1,11 @@
 package com.fwtest.server;
 
-import com.fwtest.Constants;
-import com.util.UtilConsole;
+import cooper.rpc.Constants;
+import cooper.rpc.UtilConsole;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 
 
 /**

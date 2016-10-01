@@ -1,11 +1,12 @@
 package com.cooper.rpc;
 
-import org.jboss.netty.bootstrap.ClientBootstrap;
-import org.jboss.netty.channel.*;
-import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
-
-import java.net.InetSocketAddress;
-import java.util.concurrent.Executors;
+import cooper.rpc.Constants;
+import cooper.rpc.UtilConsole;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
  * Created by xijingbo on 2016-09-29.
@@ -13,44 +14,51 @@ import java.util.concurrent.Executors;
 public class NettyRPCClient {
 
     public static void main(String args[]) {
-        // Client服务启动器
-        ClientBootstrap bootstrap = new ClientBootstrap(
-                new NioClientSocketChannelFactory(
-                        Executors.newCachedThreadPool(),
-                        Executors.newCachedThreadPool()));
-        // 设置一个处理服务端消息和各种消息事件的类(Handler)
-        bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-            @Override
-            public ChannelPipeline getPipeline() throws Exception {
-                return Channels.pipeline(new HelloClientHandler());
-            }
-        });
-        // 连接到本地的8000端口的服务端
-        bootstrap.connect(new InetSocketAddress(
-                "127.0.0.1", 8000));
+
+        String host = Constants.instance.DefaultHostForClient;
+        int port = Constants.instance.DefaultPort;
+
+        if(args.length < 2)
+        {
+            UtilConsole.error("启动需要两个参数,服务器ip和端口，默认链接 " + Constants.instance.DefaultHostForClient + ":" + Constants.instance.DefaultPort);
+        }
+        else
+        {
+            host = args[0];
+            port = Integer.parseInt(args[1]);
+        }
+        UtilConsole.log("启动 " + host + ":" + port);
+        NettyRPCClient client = new NettyRPCClient();
+        client.run(host,port);
     }
 
-    private static class HelloClientHandler extends SimpleChannelHandler {
+    public void run(String host,int port){
+        EventLoopGroup group = new NioEventLoopGroup();
+        try {
+            Bootstrap b = new Bootstrap();
+            b.group(group)
+                    .channel(NioSocketChannel.class)
+                    .handler(new ClientChannelInit());
+
+            // Start the connection attempt.
+//            io.netty.channel.Channel ch = b.connect(host, port).sync().channel();
+//
+//            CooperClientBizHandler.instance.run();
+
+            ChannelFuture f = b.connect(host, port).sync(); // (5)
+
+            // Wait until the connection is closed.
+            f.channel().closeFuture().sync();
 
 
-        /**
-         * 当绑定到服务端的时候触发，打印"Hello world, I'm client."
-         *
-         * @alia OneCoder
-         * @author lihzh
-         */
-        @Override
-        public void channelConnected(ChannelHandlerContext ctx,
-                                     ChannelStateEvent e) {
-            System.out.println("Hello world, I'm client.");
         }
+        catch (Exception e)
+        {
+            e.printStackTrace();
 
-        @Override
-        public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-            super.messageReceived(ctx, e);
-            Object o = e.getMessage();
-            System.out.println(o.toString());
+        }finally {
+            // The connection is closed automatically on shutdown.
+            group.shutdownGracefully();
         }
-
     }
 }

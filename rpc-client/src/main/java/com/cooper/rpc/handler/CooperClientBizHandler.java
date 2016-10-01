@@ -1,16 +1,11 @@
 package com.cooper.rpc.handler;
 
-import com.cooper.rpc.body.RequestBody;
-import com.cooper.rpc.body.ResponseBody;
-import com.fwtest.Constants;
-import com.util.UtilConsole;
-import com.util.UtilJson;
+import cooper.rpc.UtilConsole;
+import cooper.rpc.body.RequestBody;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import org.json.JSONObject;
-import org.omg.CORBA.Request;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -63,21 +58,17 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestB
 				if (line == null) {
 					break;
 				}
-
-				// Sends the received line to the server.
-				lastWriteFuture = channel.writeAndFlush(new RequestBody(id.getAndIncrement()+"","InvokeClass", line ,null) {
-				});
-
-				// If user typed the 'bye' command, wait until the server closes
-				// the connection.
 				if ("bye".equals(line.toLowerCase())) {
 					channel.closeFuture().sync();
 					break;
-				}// Wait until all messages are flushed before closing the channel.
+				}
+
+				// Sends the received line to the server.
+				lastWriteFuture = channel.writeAndFlush(new RequestBody(id.getAndIncrement()+"","InvokeClass", line ,null) );
+				if (lastWriteFuture != null) {
+					lastWriteFuture.sync();
+				}
 			}
-            if (lastWriteFuture != null) {
-                lastWriteFuture.sync();
-            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

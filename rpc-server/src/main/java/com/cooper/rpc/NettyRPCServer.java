@@ -1,9 +1,9 @@
 package com.cooper.rpc;
 
 
-import com.cooper.rpc.handler.CooperServerBizHandler;
-import com.fwtest.Constants;
-import com.util.UtilConsole;
+import com.cooper.rpc.channel.ServerChannelInit;
+import cooper.rpc.Constants;
+import cooper.rpc.UtilConsole;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -11,7 +11,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 /**
  * Created by xijingbo on 2016-09-29.
  */
-public class NettyRPCServer implements  RPCServer{
+public class NettyRPCServer {
 
     public static void main(String [] args){
         String host = Constants.instance.DefaultHost;
@@ -46,7 +46,7 @@ public class NettyRPCServer implements  RPCServer{
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
 //					.handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new CooperServerBizHandler());
+                    .childHandler(new ServerChannelInit());
 
             b.bind(host,port).sync().channel().closeFuture().sync();
         }
