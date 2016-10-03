@@ -2,6 +2,8 @@ package com.cooper.rpc.handler;
 
 import com.cooper.rpc.UtilConsole;
 import com.cooper.rpc.body.RequestBody;
+import com.cooper.rpc.body.ResponseBody;
+import com.cooper.rpc.body.TestInterface;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by Administrator on 2016/9/29.
  */
-public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestBody> {
+public class CooperClientBizHandler extends SimpleChannelInboundHandler<ResponseBody> {
 	public static CooperClientBizHandler instance;
 	private Channel channel;
 
@@ -43,9 +45,10 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestB
     ChannelFuture lastWriteFuture = null;
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, RequestBody pack) throws Exception
+	protected void channelRead0(ChannelHandlerContext ctx, ResponseBody pack) throws Exception
 	{
-
+		TestInterface t = (TestInterface) pack.getInvokeResult();
+		 t.printTime();
 	}
 
 	public void ready() {
@@ -64,7 +67,7 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<RequestB
 				}
 
 				// Sends the received line to the server.
-				lastWriteFuture = channel.writeAndFlush(new RequestBody(id.getAndIncrement()+"","InvokeClass", line ,null) );
+				lastWriteFuture = channel.writeAndFlush(new RequestBody(id.getAndIncrement()+"","com.cooper.rpc.body.TestInterface", "printTime" ,null) );
 				if (lastWriteFuture != null) {
 					lastWriteFuture.sync();
 				}

@@ -14,13 +14,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.esotericsoftware</groupId>
-            <artifactId>kryo</artifactId>
+            <groupId>happy-coding</groupId>
+            <artifactId>cooper-serialize</artifactId>
         </dependency>
         <dependency>
             <groupId>happy-coding</groupId>
             <artifactId>cooper-utils</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>happy-coding</groupId>

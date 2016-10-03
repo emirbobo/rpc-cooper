@@ -14,6 +14,18 @@
 
     <dependencies>
         <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>happy-coding</groupId>
+            <artifactId>cooper-serialize</artifactId>
+        </dependency>
+        <dependency>
             <groupId>happy-coding</groupId>
             <artifactId>cooper-utils</artifactId>
         </dependency>

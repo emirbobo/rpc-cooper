@@ -9,20 +9,20 @@ public class ResponseBody implements java.io.Serializable {
 
     private int resultCode;
 
-    private String jsonResult;
+    private Object invokeResult;
 
     public ResponseBody() {
     }
 
-    public ResponseBody(int resultCode, String jsonResult) {
+    public ResponseBody(int resultCode, Object jsonResult) {
         this.resultCode = resultCode;
-        this.jsonResult = jsonResult;
+        this.invokeResult = jsonResult;
     }
 
-    public ResponseBody(int uid, int resultCode, String jsonResult) {
+    public ResponseBody(int uid, int resultCode, Object jsonResult) {
         this.uid = uid;
         this.resultCode = resultCode;
-        this.jsonResult = jsonResult;
+        this.invokeResult = jsonResult;
     }
 
     public int getResultCode() {
@@ -42,12 +42,12 @@ public class ResponseBody implements java.io.Serializable {
         this.resultCode = resultCode;
     }
 
-    public String getJsonResult() {
-        return jsonResult;
+    public Object getInvokeResult() {
+        return invokeResult;
     }
 
-    public void setJsonResult(String jsonResult) {
-        this.jsonResult = jsonResult;
+    public void setInvokeResult(Object invokeResult) {
+        this.invokeResult = invokeResult;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ResponseBody implements java.io.Serializable {
         return "ResponseBody{" +
                 "uid=" + uid +
                 ", resultCode=" + resultCode +
-                ", jsonResult='" + jsonResult + '\'' +
+                ", invokeResult='" + invokeResult + '\'' +
                 '}';
     }
 }

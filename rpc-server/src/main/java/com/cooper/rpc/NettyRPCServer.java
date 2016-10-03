@@ -1,17 +1,26 @@
 package com.cooper.rpc;
 
 
+import com.cooper.rpc.body.TestInterface;
 import com.cooper.rpc.channel.ServerChannelInit;
+import com.cooper.rpc.register.RPCRegisterHandler;
+import com.testcode.PrintTimeImpl;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+
 
 /**
  * Created by xijingbo on 2016-09-29.
  */
 public class NettyRPCServer {
 
+
+
+
     public static void main(String [] args){
+        RPCRegisterHandler.registor.register(TestInterface.class.getCanonicalName(),new PrintTimeImpl());
+        System.out.println(NettyRPCServer.class.getCanonicalName());
         String host = Constants.instance.DefaultHost;
         int port = Constants.instance.DefaultPort;
 
