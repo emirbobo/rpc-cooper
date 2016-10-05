@@ -16,7 +16,17 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class NettyRPCServer {
 
 
-
+    /**
+     * 注册爹口调用
+     * @param host
+     * @param port
+     * @param canonicalName
+     * @param o
+     */
+    public static void register(String host,int port,String canonicalName,Class o){
+        RPCRegisterHandler.registor.register(canonicalName,o);
+        new NettyRPCServer(host,port).start();
+    }
 
     public static void main(String [] args){
         RPCRegisterHandler.registor.register(TestInterface.class.getCanonicalName(),new PrintTimeImpl());
@@ -40,12 +50,12 @@ public class NettyRPCServer {
 
     private int port;
     private String host;
-    public NettyRPCServer(String host,int port) {
+    private NettyRPCServer(String host,int port) {
         this.host = host;
         this.port = port;
     }
 
-    public void start(){
+    private void start(){
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {

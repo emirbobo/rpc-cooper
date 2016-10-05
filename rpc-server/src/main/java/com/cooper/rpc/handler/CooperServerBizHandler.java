@@ -38,7 +38,6 @@ public class CooperServerBizHandler extends SimpleChannelInboundHandler<RequestB
             throwable.printStackTrace();
         }
         channel.writeAndFlush(responseBody);
-
     }
 
     @Override

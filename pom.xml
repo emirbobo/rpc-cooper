@@ -16,7 +16,7 @@
         <module>cooper-base-resources</module>
         <module>cooper-parent</module>
         <module>cooper-serialize</module>
-        <module>rpc-register</module>
+        <module>dubbo-example</module>
     </modules>
 
     <build>

@@ -48,7 +48,7 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<Response
 	protected void channelRead0(ChannelHandlerContext ctx, ResponseBody pack) throws Exception
 	{
 		TestInterface t = (TestInterface) pack.getInvokeResult();
-		 t.printTime();
+		 t.printTime("asdasd");
 	}
 
 	public void ready() {
@@ -67,7 +67,7 @@ public class CooperClientBizHandler extends SimpleChannelInboundHandler<Response
 				}
 
 				// Sends the received line to the server.
-				lastWriteFuture = channel.writeAndFlush(new RequestBody(id.getAndIncrement()+"","com.cooper.rpc.body.TestInterface", "printTime" ,null) );
+				lastWriteFuture = channel.writeAndFlush(new RequestBody(id.getAndIncrement()+"","com.cooper.rpc.body.TestInterface", "printTime" ,new Object[]{"asdasd"}) );
 				if (lastWriteFuture != null) {
 					lastWriteFuture.sync();
 				}

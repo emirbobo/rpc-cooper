@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class PrintTimeImpl implements TestInterface {
     @Override
-    public void printTime() {
-        System.out.println("now time is :" + new Date().toGMTString());
+    public void printTime(String ss) {
+        System.out.println("now time is :" + new Date().toGMTString() + "&params"+ss);
     }
 }
