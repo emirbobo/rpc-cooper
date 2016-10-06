@@ -63,7 +63,7 @@
 
     <build>
         <plugins>
-
+<!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -93,12 +93,24 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <!--<mainClass></mainClass>-->
+                            <mainClass></mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
+            -->
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.5.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
     </build>
 
 </project>
