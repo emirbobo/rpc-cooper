@@ -3,6 +3,7 @@ package com.cooper.rpc;
 
 import com.cooper.rpc.body.TestInterface;
 import com.cooper.rpc.channel.ServerChannelInit;
+import com.cooper.rpc.curator.CuratorClient;
 import com.cooper.rpc.register.RPCRegisterHandler;
 import com.testcode.PrintTimeImpl;
 import io.netty.channel.EventLoopGroup;
@@ -20,16 +21,19 @@ public class NettyRPCServer {
      * 注册爹口调用
      * @param host
      * @param port
-     * @param canonicalName
      * @param o
      */
-    public static void register(String host,int port,String canonicalName,Class o){
-        RPCRegisterHandler.registor.register(canonicalName,o);
-        new NettyRPCServer(host,port).start();
+    public static void register(String host,int port,Class o) throws Exception {
+        RPCRegisterHandler.registor.register(o.getCanonicalName(),o);
+        CuratorClient.createNode(host,port,o);
+        new NettyRPCServer(host,8008).start();
     }
 
-    public static void main(String [] args){
-        RPCRegisterHandler.registor.register(TestInterface.class.getCanonicalName(),new PrintTimeImpl());
+    public static void main(String [] args) throws Exception {
+        register("localhost",2181,PrintTimeImpl.class);
+    }
+    public static void main1(String [] args){
+        RPCRegisterHandler.registor.register(TestInterface.class.getCanonicalName(),PrintTimeImpl.class);
         System.out.println(NettyRPCServer.class.getCanonicalName());
         String host = Constants.instance.DefaultHost;
         int port = Constants.instance.DefaultPort;
@@ -46,6 +50,10 @@ public class NettyRPCServer {
         UtilConsole.log("启动 " + host + ":" + port);
         NettyRPCServer server = new NettyRPCServer(host,port);
         server.start();
+    }
+
+    public NettyRPCServer(){
+
     }
 
     private int port;
@@ -77,7 +85,4 @@ public class NettyRPCServer {
         }
     }
 
-    public void destory(){
-
-    }
 }

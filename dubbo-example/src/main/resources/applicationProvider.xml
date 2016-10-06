@@ -12,7 +12,9 @@
     <!--<context:component-scan base-package="com.dubbo" />-->
     <dubbo:application name="hello-world" />
     <!-- 注册地址 -->
-    <dubbo:registry address="zookeeper://localhost:2183" check="false" />
+    <dubbo:registry address="zookeeper://localhost:2181" check="false" />
     <dubbo:service interface="com.dubbo.example.IProcessData"	ref="demoService" executes="10" />
+    <dubbo:service interface="com.dubbo.example.IProcessData1"	ref="demoService1" executes="10" />
+    <bean id="demoService1" class="com.dubbo.example.ProcessDataImpl1" />
     <bean id="demoService" class="com.dubbo.example.ProcessDataImpl" />
 </beans>

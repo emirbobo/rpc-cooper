@@ -13,7 +13,7 @@ public enum RPCRegisterHandler {
 
     ConcurrentHashMap<String,Object> classRegisterMap = new ConcurrentHashMap<>();
 
-    public void register(String interfaceName,Object clazz){
+    public void register(String interfaceName,Class clazz){
         if(clazz == null){
             System.out.println("class cannot be null..");
             return;

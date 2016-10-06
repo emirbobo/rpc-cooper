@@ -11,23 +11,38 @@
     <packaging>pom</packaging>
     <artifactId>cooper-parent</artifactId>
 
-    <dependencyManagement>
 
+    <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-test</artifactId>
-                <version>3.2.0</version>
+                <version>2.7.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-x-discovery</artifactId>
-                <version>3.2.0</version>
+                <version>2.7.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-x-discovery-server</artifactId>
-                <version>3.2.0</version>
+                <version>2.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>2.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-client</artifactId>
+                <version>2.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>apache-curator</artifactId>
+                <version>2.7.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
@@ -38,21 +53,6 @@
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>apache-zookeeper</artifactId>
                 <version>3.4.6</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-framework</artifactId>
-                <version>3.2.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-client</artifactId>
-                <version>3.2.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>apache-curator</artifactId>
-                <version>3.2.0</version>
             </dependency>
             <dependency>
                 <groupId>happy-coding</groupId>
