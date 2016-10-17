@@ -29,14 +29,16 @@ import java.util.Map;
 public class DiscoveryExample {
     private static final String PATH = "/discovery/example";
 
+   final static String connectStr = "localhost:2181";
+
     public static void main(String[] args) throws Exception {
         // This method is scaffolding to get the example up and running
-        TestingServer server = new TestingServer();
+//        TestingServer server = new TestingServer();
         CuratorFramework client = null;
         ServiceDiscovery<InstanceDetails> serviceDiscovery = null;
         Map<String, ServiceProvider<InstanceDetails>> providers = Maps.newHashMap();
         try {
-            client = CuratorFrameworkFactory.newClient(server.getConnectString(), new ExponentialBackoffRetry(1000, 3));
+            client = CuratorFrameworkFactory.newClient(connectStr, new ExponentialBackoffRetry(1000, 3));
             client.start();
             JsonInstanceSerializer<InstanceDetails> serializer = new JsonInstanceSerializer<InstanceDetails>(InstanceDetails.class);
             serviceDiscovery = ServiceDiscoveryBuilder.builder(InstanceDetails.class).client(client).basePath(PATH).serializer(serializer).build();
@@ -48,7 +50,7 @@ public class DiscoveryExample {
             }
             CloseableUtils.closeQuietly(serviceDiscovery);
             CloseableUtils.closeQuietly(client);
-            CloseableUtils.closeQuietly(server);
+//            CloseableUtils.closeQuietly(server);
         }
     }
 

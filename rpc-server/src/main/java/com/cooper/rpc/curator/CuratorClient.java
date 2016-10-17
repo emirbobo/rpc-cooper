@@ -23,8 +23,19 @@ public class CuratorClient {
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
         CuratorFramework newClient= CuratorFrameworkFactory.newClient(host+":"+port, retryPolicy);
         newClient.start();
-        String classPath =root+ o.getCanonicalName();
-        newClient.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(classPath,createContent(host,port,o.getMethods(),o.getName()).getBytes());
+        registerNode(newClient,o,host,port);
+    }
+
+    private static void registerNode(CuratorFramework newClient ,Class o,String host,int port) throws Exception {
+        Class []inters = o.getInterfaces();
+        for(Class c : inters){
+            if(c==null){
+                continue;
+            }
+            String classPath =root+ c.getCanonicalName();
+            System.out.println("register node:"+classPath);
+            newClient.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(classPath,createContent(host,port,c.getMethods(),c.getName()).getBytes());
+        }
     }
 
     private static String createContent(String host, int port, Method[]methods, String className){

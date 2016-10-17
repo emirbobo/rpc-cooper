@@ -2,6 +2,8 @@ package com.cooper.rpc.register;
 
 import com.cooper.rpc.body.RequestBody;
 import org.apache.commons.lang.reflect.MethodUtils;
+import org.apache.zookeeper.CreateMode;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -13,12 +15,18 @@ public enum RPCRegisterHandler {
 
     ConcurrentHashMap<String,Object> classRegisterMap = new ConcurrentHashMap<>();
 
-    public void register(String interfaceName,Class clazz){
+    public void register( Class clazz){
         if(clazz == null){
             System.out.println("class cannot be null..");
             return;
         }
-        registor.classRegisterMap.put(interfaceName,clazz);
+        Class []inters = clazz.getInterfaces();
+        for(Class c : inters){
+            if(c==null){
+                continue;
+            }
+            registor.classRegisterMap.put(c.getCanonicalName(),clazz);
+        }
     }
 
     public Object findResult(RequestBody className) throws Throwable {

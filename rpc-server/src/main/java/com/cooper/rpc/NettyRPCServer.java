@@ -18,22 +18,22 @@ public class NettyRPCServer {
 
 
     /**
-     * 注册爹口调用
+     * 注册接口调用
      * @param host
      * @param port
      * @param o
      */
     public static void register(String host,int port,Class o) throws Exception {
-        RPCRegisterHandler.registor.register(o.getCanonicalName(),o);
+        RPCRegisterHandler.registor.register(o);
         CuratorClient.createNode(host,port,o);
         new NettyRPCServer(host,8008).start();
     }
 
-    public static void main(String [] args) throws Exception {
+    public static void main1(String [] args) throws Exception {
         register("localhost",2181,PrintTimeImpl.class);
     }
-    public static void main1(String [] args){
-        RPCRegisterHandler.registor.register(TestInterface.class.getCanonicalName(),PrintTimeImpl.class);
+    public static void main(String [] args){
+        RPCRegisterHandler.registor.register(PrintTimeImpl.class);
         System.out.println(NettyRPCServer.class.getCanonicalName());
         String host = Constants.instance.DefaultHost;
         int port = Constants.instance.DefaultPort;
